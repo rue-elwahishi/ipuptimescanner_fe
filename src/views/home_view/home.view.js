@@ -42,7 +42,7 @@ export class HomeView extends Component {
                                 See a map of all the currently active and inactive Clients.
                             </Card.Text>
                             <Link to="/clients/map">
-                                <Button variant="primary">Go to Clients Map</Button>
+                                <Button variant="light">Go to Clients Map</Button>
                             </Link>
                             </Card.Body>
                         </Card>
@@ -58,7 +58,7 @@ export class HomeView extends Component {
                                 See a list of all the active and disabled Clients.
                             </Card.Text>
                             <Link to="/clients">
-                                <Button variant="primary">Go to Clients</Button>
+                                <Button variant="light">Go to Clients</Button>
                             </Link>
                             </Card.Body>
                         </Card>

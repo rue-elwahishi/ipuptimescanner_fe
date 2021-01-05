@@ -2,38 +2,39 @@ import React, { Component, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ClientFormComponent } from '../../components/clientForm/client_form.component';
 import { useQuery } from '../../customHooks/custom_hooks';
-import { ClientsService } from '../../services/clients.service';
+import{ PostClientEndpoint} from '../../customHooks/postClientEndpoint'
 
 
 
 
 export function AddItemView(props) {
     const [message, setMessage] = useState('');
-    const clientsService = new ClientsService() 
+    const [newClient, postNewClient] = PostClientEndpoint();
+
        
     
-    const handleSubmit = (event, data) => {
+     const  handleSubmit = (event, data) => {
         console.log(data, 'data')
         event.preventDefault();
     
+       
+
+         postNewClient(data)
         
-        console.log("Data to submit: ", event, data);
+          document.getElementById("add-client-form").reset();
+            // .then(response => {
+                
+       
 
-         clientsService.postClient(data)
-            .then(response => {
-                console.log("Submit response: ", response );
+            //     setMessage("Success");
+            // })
+            // .catch(error => {
+            //     console.log("Submit error: ", error);
 
-                document.getElementById("add-client-form").reset();
-
-                setMessage("Success");
-            })
-            .catch(error => {
-                console.log("Submit error: ", error);
-
-                setMessage("Something went wrong...");
-            })
+            //     setMessage("Something went wrong...");
+            // })
     }
-
+    console.log(newClient)
     
     const clearMessage = () => {
         setMessage(undefined);

@@ -51,7 +51,7 @@ export class MapView extends Component {
     this.clientsService = new ClientsService();
     this.state = { clientData: undefined };
   }
-
+  
   componentDidMount() {
     console.log("Getting clients... ");
     this.clientsService
@@ -74,6 +74,7 @@ export class MapView extends Component {
   }
 
   render() {
+    console.log(this.state.clientData, 'state')
     return (
       <Row className="h-100">
         <Col>
@@ -84,16 +85,16 @@ export class MapView extends Component {
                     <LitMarker
                       key={client.id}
                       anchor={[
-                        1 * client.attributes.coordinates.x,
-                        1 * client.attributes.coordinates.y,
+                        1 * client.attributes.x,
+                        1 * client.attributes.y,
                       ]}
                     />
                   ) : (
                     <DeadMarker
                       key={client.id}
                       anchor={[
-                        1 * client.attributes.coordinates.x,
-                        1 * client.attributes.coordinates.y,
+                        1 * client.attributes.x,
+                        1 * client.attributes.y,
                       ]}
                     />
                   )

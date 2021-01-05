@@ -5,11 +5,12 @@ import Page404 from '../pages/fourohfour'
 
 const ErrorStatusContext = React.createContext()
 
-export default function ErrorHandler({children}){
+export const ErrorHandler = ({children}) => {
  const history = useHistory();
  const [errorStatusCode, setErrorStatusCode] = useState();
 
  useEffect(() => {
+
      const unlisten = history.listen(() => setErrorStatusCode(undefined));
 
      return unlisten
@@ -17,11 +18,10 @@ export default function ErrorHandler({children}){
 
  const renderContent = () => {
    console.log(errorStatusCode, 'code')
-    //  if(errorStatusCode === 404){
-    //      return <Page404/>
-    //  }
-
-
+     if(errorStatusCode === 404){
+         return <Page404/>
+     }
+     
      return children
  }
 

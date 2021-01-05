@@ -16,46 +16,27 @@ import { ClientsService } from "../../services/clients.service";
 import { faTrash, faCog, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "../../customHooks/custom_hooks";
+import {
+  GetClientEndpoint,
+  DeleteClientEndpoint,
+} from "../../customHooks/postClientEndpoint";
 
 export default function WebsitesView() {
-  const [clientData, setClientData] = useState(undefined);
+  const [clients, getClients] = GetClientEndpoint();
+  const [deleted, deleteClient] = DeleteClientEndpoint();
   const [filteredData, setFilteredData] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("name");
-  const {data, status} = useQuery({url:'/clients', requestType:'get'})
 
-  const clientsService = new ClientsService();
+  useEffect(() => {
+    getClients();
+  }, []);
 
-  // useEffect(() => {
-  //   getClients();
-  // }, []);
-   console.log(data, 'data')
-
-  // const setter = () => {
-  //   if(data){
-  //     setClientData(data)
-  //   }
-  //   return false
-  // }
   const handleCallback = (newSearchTerm) => {
     setSearchTerm(newSearchTerm);
   };
   const handleSecondCallback = (def) => {
     setFilter(def);
-  };
-  const getClients = () => {
-    clientsService
-      .getClients()
-      .then((response) => {
-        // console.log("Get clients response: ", response);
-
-        console.log(response.status);
-
-        setClientData(response["data"]);
-      })
-      .catch((error) => {
-        console.log("Something went wrong: ", error);
-      });
   };
 
   // useEffect(() => {
@@ -73,22 +54,14 @@ export default function WebsitesView() {
   //   }
   // }, [searchTerm]);
 
+  async function deleteWebsite(id) {
+    await deleteClient(id);
+    console.log("...deleting");
+    await getClients();
+    console.log("....fetching");
+  }
 
-  const deleteWebsite = (id) => {
-    clientsService
-      .deleteClient(id)
-      .then((response) => {
-        console.log("Get clients response: ", response);
-        getClients();
-      })
-      .catch((error) => {
-        console.log("Something went wrong: ", error);
-        getClients();
-      });
-  };
-  console.log(status, 'status from hook')
- console.log(data, 'helloo from the other sideeeeee')
-  return (  
+  return (
     <div>
       <Container>
         <Row>
@@ -101,7 +74,7 @@ export default function WebsitesView() {
                   handleSecondCallback={handleSecondCallback}
                 />
               </div>
-              {data  ? (
+              {clients.data ? (
                 <Table className="py-5" striped hover>
                   <thead>
                     <tr>
@@ -116,50 +89,61 @@ export default function WebsitesView() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredData ? filteredData : data.map((row) => (
-                      <tr key={row.id}>
-                        <td>{row.id}</td>
-                        <td>{row.name}</td>
-                        <td>{row.address}</td>
-                        <td>
-                          <span className="badge badge-info">{row.status}</span>
-                        </td>
-                        <td>{row.description}</td>
-                        <td>{new Date(row.created_at).toLocaleDateString()}</td>
-                        <td>{new Date(row.updated_at).toLocaleDateString()}</td>
-                        <td>
-                          <div className="row mx-1">
-                            <div className="col-4">
-                              <Link to={"/clients/" + row.id + "/history"}>
-                                <Button
-                                  className="btn-sm px-3"
-                                  onClick={() => this.goToHistory(row.id)}
-                                  variant="primary"
-                                >
-                                  <FontAwesomeIcon icon={faClock} />
-                                </Button>
-                              </Link>
-                            </div>
-                            <div className="col-4">
-                              <Link to={"/clients/" + row.id + "/edit"}>
-                                <Button className="btn-sm px-3" variant="info">
-                                  <FontAwesomeIcon icon={faCog} />
-                                </Button>
-                              </Link>
-                            </div>
-                            <div className="col-4">
-                              <Button
-                                className="btn-sm px-3"
-                                onClick={() => deleteWebsite(row.id)}
-                                variant="danger"
-                              >
-                                <FontAwesomeIcon icon={faTrash} />
-                              </Button>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {filteredData
+                      ? filteredData
+                      : clients.data.map((row) => (
+                          <tr key={row.id}>
+                            <td>{row.id}</td>
+                            <td>{row.name}</td>
+                            <td>{row.address}</td>
+                            <td>
+                              <span className="badge badge-info">
+                                {row.status}
+                              </span>
+                            </td>
+                            <td>{row.description}</td>
+                            <td>
+                              {new Date(row.created_at).toLocaleDateString()}
+                            </td>
+                            <td>
+                              {new Date(row.updated_at).toLocaleDateString()}
+                            </td>
+                            <td>
+                              <div className="row mx-1">
+                                <div className="col-4">
+                                  <Link to={"/clients/" + row.id + "/history"}>
+                                    <Button
+                                      className="btn-sm px-3"
+                                      onClick={() => this.goToHistory(row.id)}
+                                      variant="primary"
+                                    >
+                                      <FontAwesomeIcon icon={faClock} />
+                                    </Button>
+                                  </Link>
+                                </div>
+                                <div className="col-4">
+                                  <Link to={"/clients/" + row.id + "/edit"}>
+                                    <Button
+                                      className="btn-sm px-3"
+                                      variant="info"
+                                    >
+                                      <FontAwesomeIcon icon={faCog} />
+                                    </Button>
+                                  </Link>
+                                </div>
+                                <div className="col-4">
+                                  <Button
+                                    className="btn-sm px-3"
+                                    onClick={() => deleteWebsite(row.id)}
+                                    variant="danger"
+                                  >
+                                    <FontAwesomeIcon icon={faTrash} />
+                                  </Button>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
                   </tbody>
                 </Table>
               ) : (

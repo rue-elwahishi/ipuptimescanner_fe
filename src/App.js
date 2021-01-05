@@ -6,7 +6,7 @@ import { HomeView } from "./views/home_view/home.view";
 import { MapView } from "./views/map_view/map.view";
 import { AddItemView } from "./views/add_item_view/add_item.view";
 import WebsitesView from "./views/websites_view/websites.view";
-import ErrorHandler from "./error_handler/error_handler";
+import {ErrorHandler} from "./error_handler/error_handler";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -64,6 +64,10 @@ function App(props) {
 
             <Route exact path="/">
               <HomeView />
+            </Route>
+
+            <Route exact path="*">
+              <Page404/>
             </Route>
           </Switch>
         </ErrorHandler>

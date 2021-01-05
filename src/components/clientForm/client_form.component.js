@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { ClientsService } from "../../services/clients.service";
-import useForm from "../../customHooks/custom_hooks";
+import {useForm} from "../../customHooks/custom_hooks";
 
 export function ClientFormComponent(props) {
   const [title, setTitle] = useState(undefined);
@@ -16,7 +16,7 @@ export function ClientFormComponent(props) {
       attributes: {
         coordinates: {
           x: "",
-          y: "",
+        y: "",
         },
       },
       description: "",
@@ -25,7 +25,6 @@ export function ClientFormComponent(props) {
   );
 
   useEffect(() => {
-    console.log("ClientFormComponent Props: ", props);
     prevState();
   }, []);
 
