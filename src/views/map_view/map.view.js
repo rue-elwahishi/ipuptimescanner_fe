@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Map from "pigeon-maps";
 
 // import Marker from 'pigeon-marker'
@@ -6,7 +6,7 @@ import Map from "pigeon-maps";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
-
+import SearchBar from "../../components/searchbar/search_bar";
 import { Row, Col } from "react-bootstrap";
 
 import { ClientsService } from "../../services/clients.service";
@@ -44,17 +44,13 @@ const DeadMarker = ({ left, top, style, children }) => (
   </FontAwesomeIcon>
 );
 
-export class MapView extends Component {
-  constructor(props) {
-    super(props);
+export function MapView() {
+  const clientsService = new ClientsService();
+  const [clientData, setClientData] = useState(undefined);
 
-    this.clientsService = new ClientsService();
-    this.state = { clientData: undefined };
-  }
-  
-  componentDidMount() {
+  useEffect(() => {
     console.log("Getting clients... ");
-    this.clientsService
+    clientsService
       .getClients()
       .then((response) => {
         console.log("Get clients response: ", response);
@@ -66,21 +62,30 @@ export class MapView extends Component {
           return client;
         });
         console.log("Get clients response filtered: ", response["data"]);
-        this.setState({ clientData: response["data"] });
+        setClientData(response["data"]);
       })
       .catch((error) => {
         console.log("Something went wrong: ", error);
       });
-  }
+  });
 
-  render() {
-    console.log(this.state.clientData, 'state')
-    return (
-      <Row className="h-100">
-        <Col>
+  return (
+    <div>
+      <Row className="h-100 ">
+        <Col md={12}>
           <Map center={[32.1, 20.07]} zoom={12} height={600}>
-            {this.state.clientData
-              ? this.state.clientData.map((client) =>
+            <Row className="mt-2 mb-5 justify-center">
+              <Col md={4} className="mx-auto">
+                <div className="display-5  ">Client Map</div>
+              </Col>
+              <Col md={4}></Col>
+
+              <Col md={4}>
+                <SearchBar />
+              </Col>
+            </Row>
+            {clientData
+              ? clientData.map((client) =>
                   client.status === "up" ? (
                     <LitMarker
                       key={client.id}
@@ -103,6 +108,6 @@ export class MapView extends Component {
           </Map>
         </Col>
       </Row>
-    );
-  }
+    </div>
+  );
 }

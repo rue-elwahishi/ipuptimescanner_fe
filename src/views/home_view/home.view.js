@@ -1,72 +1,53 @@
-import React, { Component } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-import mapImage from '../../assets/map.png';
-import webImage from '../../assets/web.jpg';
-import { ClientsService } from '../../services/clients.service';
+import mapImage from "../../assets/Map.png";
+import addUser from "../../assets/Add-User.png";
+import website from "../../assets/website.png";
 
-export class HomeView extends Component {
-    
-    constructor(props) {
-        super(props);
+import React from "react";
 
-        this.clientsService = new ClientsService();
-        this.state = {};
-    }
+const data = [
+  {
+    title: "See a map of all the currently active and inactive Clienss.",
+    image: mapImage,
+    buttonText: "Go to Map",
+    link: "/clients/map",
+  },
+  {
+    title: "See a map of all the currently active and inactive Clients.",
+    image: website,
+    buttonText: "Go to Clients",
+    link: "/clients",
+  },
+  {
+    title: "See a map of all the currently active and inactive Clients.",
+    image: addUser,
+    buttonText: "Add Client",
+    link: "/clients/add",
+  },
+];
 
-    componentDidMount(){
-        console.log("Getting clients... ");
-        this.clientsService.getClients()
-            .then(response => {
-                console.log("Get clients response: ", response);
-            })
-            .catch(error => {
-                console.log("Something went wrong: ", error);
-            })
-    }
-
-    render() {
-
-
+export function HomeView() {
+  return (
+    <Container className="vertical-center d-flex flex-column  justify-content-center">
+      {data.map((item, index) => {
         return (
-            <Container>
-                <Row className="pt-3">
-                    <Col className="pt-3">
-                        
-                        <Card className="mx-auto" style={{ width: '20rem' }}>
-                            <Card.Img variant="top" src={ mapImage } />
-                            <Card.Body>
-                            <Card.Title>Client Map</Card.Title>
-                            <Card.Text>
-                                See a map of all the currently active and inactive Clients.
-                            </Card.Text>
-                            <Link to="/clients/map">
-                                <Button variant="light">Go to Clients Map</Button>
-                            </Link>
-                            </Card.Body>
-                        </Card>
-
-                    </Col>
-                    <Col className="pt-3">
-
-                        <Card className="mx-auto" style={{ width: '20rem' }}>
-                            <Card.Img variant="top" src={ webImage } />
-                            <Card.Body>
-                            <Card.Title>Clients</Card.Title>
-                            <Card.Text>
-                                See a list of all the active and disabled Clients.
-                            </Card.Text>
-                            <Link to="/clients">
-                                <Button variant="light">Go to Clients</Button>
-                            </Link>
-                            </Card.Body>
-                        </Card>
-
-                    </Col>
-                </Row>
-            </Container>
+          <Row i={index} className="my-2 Card">
+            <Col className="mt-2" xs={2} md={6}>
+              {item.title}
+              <br></br> <br></br>
+              <Link to={item.link}>
+                <Button variant="Dark"> {item.buttonText}</Button>{" "}
+              </Link>
+            </Col>
+            <Col md={2}></Col>
+            <Col xs={3} md={3}>
+              <img className="img-fluid my-2" src={item.image} />
+            </Col>
+          </Row>
         );
-    }
-    
+      })}
+    </Container>
+  );
 }

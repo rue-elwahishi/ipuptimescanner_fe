@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 // import { ClientsService } from "../../services/clients.service";
-import {useErrorStatus} from '../error_handler/error_handler'
-import axios from '../services/auth_axios'
+import { useErrorStatus } from "../error_handler/error_handler";
+import axios from "../services/auth_axios";
 
 // a reusable form hook for all forms
 export const useForm = (initialState, callback) => {
@@ -40,47 +40,43 @@ export const useForm = (initialState, callback) => {
     handleInputChange,
     inputs,
   };
-}
-
-
+};
 
 // Query hook for handling API status code
-  export const useQuery = (fn) => {
-  const {setErrorStatusCode} = useErrorStatus()
+export const useQuery = (fn) => {
+  const { setErrorStatusCode } = useErrorStatus();
   const [res, setRes] = useState({
-    data:null,
-    complete:false,
-    pending:false,
-    error:false
+    data: null,
+    complete: false,
+    pending: false,
+    error: false,
   });
   const [req, setReq] = useState();
 
-
   useEffect(() => {
-     if(!req) return;
-     setRes({
-       data:null,
-       pending:true,
-       complete:false
-     })
-       axios(req).then(response => {
-       if(response.status > 400){
-         setErrorStatusCode(400)
-       } else {
-         console.log(response, response.data)
-        setRes({
-          data:response.data,
-          pending:false,
-          complete:true
-        })
-       }
- 
- 
-     }).catch((error) => {
-       console.log(error, 'error')
-     })
+    if (!req) return;
+    setRes({
+      data: null,
+      pending: true,
+      complete: false,
+    });
+    axios(req)
+      .then((response) => {
+        if (response.status != 200) {
+          setErrorStatusCode(response.status);
+        } else {
+          console.log(response, response.data);
+          setRes({
+            data: response.data,
+            pending: false,
+            complete: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error, "error");
+      });
+  }, [req]);
 
-  }, [req])
-
-  return [res, (...args) => setReq(fn(...args))]
-}
+  return [res, (...args) => setReq(fn(...args))];
+};

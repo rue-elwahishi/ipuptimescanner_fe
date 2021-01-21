@@ -67,13 +67,20 @@ export default function WebsitesView() {
         <Row>
           <Col className="text-center my-5">
             <Card className="p-3">
-              <div className="display-5 py-3">
-                Websites
-                <SearchBar
-                  handleCallback={handleCallback}
-                  handleSecondCallback={handleSecondCallback}
-                />
-              </div>
+              <Row className="mt-2 mb-5 justify-center">
+                <Col md={4} className="mx-auto">
+                  <div className="display-5  ">Websites</div>
+                </Col>
+                <Col md={4}></Col>
+
+                <Col md={4}>
+                  <SearchBar
+                    handleCallback={handleCallback}
+                    handleSecondCallback={handleSecondCallback}
+                  />
+                </Col>
+              </Row>
+
               {clients.data ? (
                 <Table className="py-5" striped hover>
                   <thead>
