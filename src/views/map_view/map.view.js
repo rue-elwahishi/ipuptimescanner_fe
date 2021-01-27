@@ -67,23 +67,23 @@ export function MapView() {
       .catch((error) => {
         console.log("Something went wrong: ", error);
       });
-  });
+  }, []);
 
   return (
     <div>
-      <Row className="h-100 ">
+      <Row className="h-100">
         <Col md={12}>
-          <Map center={[32.1, 20.07]} zoom={12} height={600}>
-            <Row className="mt-2 mb-5 justify-center">
-              <Col md={4} className="mx-auto">
-                <div className="display-5  ">Client Map</div>
-              </Col>
-              <Col md={4}></Col>
+          <Row className="justify-center">
+            <Col md={4} className="mx-auto">
+              <div className="map-text display-5 ml-4  "> Maps </div>
+            </Col>
+            <Col md={4}></Col>
 
-              <Col md={4}>
-                <SearchBar />
-              </Col>
-            </Row>
+            <Col md={4}>
+              <SearchBar />
+            </Col>
+          </Row>
+          <Map center={[32.1, 20.07]} zoom={12} height={600}>
             {clientData
               ? clientData.map((client) =>
                   client.status === "up" ? (

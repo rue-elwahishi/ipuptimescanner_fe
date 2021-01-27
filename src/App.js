@@ -13,12 +13,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { EditClientView } from "./views/edit_client_view/edit_client_view";
 
 import Page404 from "./pages/fourohfour";
-import DashView from "./views/dash_view/dash_view";
+
+import LoginForm from "./components/loginForm/login_form.component";
 
 function App(props) {
   return (
     <>
       <Router>
+        {/* <Route exact path="/login">
+          {(match) => <LoginForm match={match} />}
+        </Route> */}
         <Container fluid>
           <Row>
             <Col xs={2} id="sidebar-wrapper">

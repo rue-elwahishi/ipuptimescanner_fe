@@ -1,7 +1,7 @@
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import mapImage from "../../assets/Map.png";
+import mapImage from "../../assets/Map-Trans.png";
 import addUser from "../../assets/Add-User.png";
 import website from "../../assets/website.png";
 
@@ -33,7 +33,7 @@ export function HomeView() {
     <Container className="vertical-center d-flex flex-column  justify-content-center">
       {data.map((item, index) => {
         return (
-          <Row i={index} className="my-2 Card">
+          <Row key={index} className="my-2 Card">
             <Col className="mt-2" xs={2} md={6}>
               {item.title}
               <br></br> <br></br>
@@ -42,7 +42,7 @@ export function HomeView() {
               </Link>
             </Col>
             <Col md={2}></Col>
-            <Col xs={3} md={3}>
+            <Col xs={3} md={4}>
               <img className="img-fluid my-2" src={item.image} />
             </Col>
           </Row>

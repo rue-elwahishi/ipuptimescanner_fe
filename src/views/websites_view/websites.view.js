@@ -38,21 +38,22 @@ export default function WebsitesView() {
   const handleSecondCallback = (def) => {
     setFilter(def);
   };
+  console.log(clients, "clients");
 
-  // useEffect(() => {
-  //   if (filter === "name") {
-  //     setFilteredData(
-  //       clientData?.filter((client) =>
-  //         client.name.toLowerCase().includes(searchTerm.toLowerCase())
-  //       )
-  //     );
-  //   }
-  //   if (filter === "address") {
-  //     setFilteredData(
-  //       clientData?.filter((client) => client.address.includes(searchTerm))
-  //     );
-  //   }
-  // }, [searchTerm]);
+  useEffect(() => {
+    if (filter === "name") {
+      setFilteredData(
+        clients.data?.filter((client) =>
+          client.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+    if (filter === "address") {
+      setFilteredData(
+        clients.data?.filter((client) => client.address.includes(searchTerm))
+      );
+    }
+  }, [searchTerm]);
 
   async function deleteWebsite(id) {
     await deleteClient(id);
@@ -60,12 +61,16 @@ export default function WebsitesView() {
     await getClients();
     console.log("....fetching");
   }
+  console.log(filteredData, "filtered");
 
   return (
     <div>
       <Container>
-        <Row>
-          <Col className="text-center my-5">
+        <Row style={{ position: "relative" }}>
+          <Col
+            className="text-center my-5"
+            style={{ position: "absolute", zIndex: "1", width: "100%" }}
+          >
             <Card className="p-3">
               <Row className="mt-2 mb-5 justify-center">
                 <Col md={4} className="mx-auto">
@@ -96,61 +101,61 @@ export default function WebsitesView() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredData
-                      ? filteredData
-                      : clients.data.map((row) => (
-                          <tr key={row.id}>
-                            <td>{row.id}</td>
-                            <td>{row.name}</td>
-                            <td>{row.address}</td>
-                            <td>
-                              <span className="badge badge-info">
-                                {row.status}
-                              </span>
-                            </td>
-                            <td>{row.description}</td>
-                            <td>
-                              {new Date(row.created_at).toLocaleDateString()}
-                            </td>
-                            <td>
-                              {new Date(row.updated_at).toLocaleDateString()}
-                            </td>
-                            <td>
-                              <div className="row mx-1">
-                                <div className="col-4">
-                                  <Link to={"/clients/" + row.id + "/history"}>
-                                    <Button
-                                      className="btn-sm px-3"
-                                      onClick={() => this.goToHistory(row.id)}
-                                      variant="primary"
-                                    >
-                                      <FontAwesomeIcon icon={faClock} />
-                                    </Button>
-                                  </Link>
-                                </div>
-                                <div className="col-4">
-                                  <Link to={"/clients/" + row.id + "/edit"}>
-                                    <Button
-                                      className="btn-sm px-3"
-                                      variant="info"
-                                    >
-                                      <FontAwesomeIcon icon={faCog} />
-                                    </Button>
-                                  </Link>
-                                </div>
-                                <div className="col-4">
+                    {(filteredData ? filteredData : clients.data)?.map(
+                      (row) => (
+                        <tr key={row.id}>
+                          <td>{row.id}</td>
+                          <td>{row.name}</td>
+                          <td>{row.address}</td>
+                          <td>
+                            <span className="badge badge-info">
+                              {row.status}
+                            </span>
+                          </td>
+                          <td>{row.description}</td>
+                          <td>
+                            {new Date(row.created_at).toLocaleDateString()}
+                          </td>
+                          <td>
+                            {new Date(row.updated_at).toLocaleDateString()}
+                          </td>
+                          <td>
+                            <div className="row mx-1">
+                              <div className="col-4">
+                                <Link to={"/clients/" + row.id + "/history"}>
                                   <Button
                                     className="btn-sm px-3"
-                                    onClick={() => deleteWebsite(row.id)}
-                                    variant="danger"
+                                    // onClick={() => goToHistory(row.id)}
+                                    variant="primary"
                                   >
-                                    <FontAwesomeIcon icon={faTrash} />
+                                    <FontAwesomeIcon icon={faClock} />
                                   </Button>
-                                </div>
+                                </Link>
                               </div>
-                            </td>
-                          </tr>
-                        ))}
+                              <div className="col-4">
+                                <Link to={"/clients/" + row.id + "/edit"}>
+                                  <Button
+                                    className="btn-sm px-3"
+                                    variant="info"
+                                  >
+                                    <FontAwesomeIcon icon={faCog} />
+                                  </Button>
+                                </Link>
+                              </div>
+                              <div className="col-4">
+                                <Button
+                                  className="btn-sm px-3"
+                                  onClick={() => deleteWebsite(row.id)}
+                                  variant="danger"
+                                >
+                                  <FontAwesomeIcon icon={faTrash} />
+                                </Button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                 </Table>
               ) : (
