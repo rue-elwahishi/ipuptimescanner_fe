@@ -34,7 +34,7 @@ export function AddItemView(props) {
             //     setMessage("Something went wrong...");
             // })
     }
-    console.log(newClient)
+  
     
     const clearMessage = () => {
         setMessage(undefined);

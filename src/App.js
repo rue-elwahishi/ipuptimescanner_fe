@@ -15,21 +15,25 @@ import { EditClientView } from "./views/edit_client_view/edit_client_view";
 import Page404 from "./pages/fourohfour";
 
 import LoginForm from "./components/loginForm/login_form.component";
+import Login from "./views/login_view/login_view";
+import LoginView from "./views/login_view/login_view";
 
 function App(props) {
   return (
     <>
       <Router>
-        {/* <Route exact path="/login">
-          {(match) => <LoginForm match={match} />}
-        </Route> */}
+
+      <ErrorHandler>
+        <Route exact path="/login">
+          <LoginView />
+        </Route>
+      
         <Container fluid>
           <Row>
             <Col xs={2} id="sidebar-wrapper">
               <SideBarComponent />
             </Col>
             <Col xs={10} id="page-content-wrapper">
-              <ErrorHandler>
                 <Switch>
                   <Route exact path="/clients/map">
                     <MapView />
@@ -62,10 +66,10 @@ function App(props) {
                     <Page404 />
                   </Route>
                 </Switch>
-              </ErrorHandler>
             </Col>
           </Row>
         </Container>
+        </ErrorHandler>
       </Router>
     </>
   );

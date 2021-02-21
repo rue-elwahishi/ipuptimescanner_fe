@@ -1,13 +1,15 @@
 import React from "react";
 import { useForm } from "../../customHooks/custom_hooks";
 export default function LoginForm(props) {
-  const { inputs, handleInputChange, setInputs } = useForm(
+  const { inputs, handleInputChange } = useForm(
     {
       username: "",
       password: "",
     },
     () => props.handleSubmit()
   );
+
+  console.log(props, 'props')
   return (
     <div>
       <div className="container-fluid vh-100 ">
@@ -15,7 +17,7 @@ export default function LoginForm(props) {
           <div className="col-10 col-md-6 col-lg-5 col-xl-4">
             <div className="Card login">
               <div className="card-body py-5">
-                <form>
+                <form onSubmit= {(e) => props.handleSubmit(e, inputs)}>
                   <div className="container-fluid">
                     <div className="row justify-content-center mb-4">
                       <div className="col-12">
