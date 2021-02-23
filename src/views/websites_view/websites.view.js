@@ -11,7 +11,7 @@ import {
 import SearchBar from "../../components/searchbar/search_bar";
 import { Link, useHistory } from "react-router-dom";
 
-import { ClientsService } from "../../services/clients.service";
+
 
 import { faTrash, faCog, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

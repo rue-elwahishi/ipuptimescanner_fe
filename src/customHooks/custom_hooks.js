@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 // import { ClientsService } from "../../services/clients.service";
 import { useErrorStatus } from "../error_handler/error_handler";
-import axios from "../services/auth_axios";
+import instance from "../services/axios_instance";
+
 
 // a reusable form hook for all forms
 export const useForm = (initialState, callback) => {
@@ -60,7 +61,7 @@ export const useQuery = (fn) => {
       pending: true,
       complete: false,
     });
-    axios(req)
+    instance(req)
       .then((response) => {
         if (response.status != 200) {
           setErrorStatusCode(response.status);

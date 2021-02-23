@@ -1,12 +1,12 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ClientFormComponent } from '../../components/clientForm/client_form.component';
-import { ClientsService } from '../../services/clients.service';
+// import { ClientsService } from '../../services/clients.service';
 
 
 export function  EditClientView(props) {
 
-    const clientsService = new ClientsService()
+    // const clientsService = new ClientsService()
 
     const [id, setId] = useState(undefined)
     const [message, setMessage] = useState('')
@@ -22,23 +22,23 @@ export function  EditClientView(props) {
 
 
     const handleSubmit = (event, data) => {
-        event.preventDefault();
+    //     event.preventDefault();
         
-        console.log("Data to submit: ", event, data, `/${id}`);
+    //     console.log("Data to submit: ", event, data, `/${id}`);
 
-        clientsService.updateClient(data, id)
-            .then(response => {
-                console.log("Submit response: ", response );
+    //     clientsService.updateClient(data, id)
+    //         .then(response => {
+    //             console.log("Submit response: ", response );
 
-                document.getElementById("add-client-form").reset();
+    //             document.getElementById("add-client-form").reset();
 
-                setMessage("Success");
-            })
-            .catch(error => {
-                console.log("Submit error: ", error);
+    //             setMessage("Success");
+    //         })
+    //         .catch(error => {
+    //             console.log("Submit error: ", error);
 
-                setMessage("Something went wrong...");
-            })
+    //             setMessage("Something went wrong...");
+    //         })
     }
 
    const clearMessage = () => {

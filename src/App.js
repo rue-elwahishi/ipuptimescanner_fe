@@ -17,15 +17,18 @@ import Page404 from "./pages/fourohfour";
 import LoginForm from "./components/loginForm/login_form.component";
 import Login from "./views/login_view/login_view";
 import LoginView from "./views/login_view/login_view";
-
+import useToken from './customHooks/useToken';
 function App(props) {
+  const { token, setToken } = useToken();
+  
   return (
     <>
       <Router>
 
       <ErrorHandler>
+        
         <Route exact path="/login">
-          <LoginView />
+          <LoginView setToken={setToken} />
         </Route>
       
         <Container fluid>

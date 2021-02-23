@@ -1,7 +1,10 @@
-import axios from "axios";
+import instance from './axios_instance'
 
-const instance = axios.create({
-  baseURL: "http://192.168.1.122:3500/api",
-});
-
-export default instance;
+export default async function loginUser(credentials){
+  
+  const userData = await JSON.stringify(credentials)
+  return instance.post('/users/login', userData,{ headers: {
+    'Content-type': 'application/json',
+    'Accept': 'application/json'
+  }}).then(data => data)
+}

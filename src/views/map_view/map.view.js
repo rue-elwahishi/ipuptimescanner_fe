@@ -9,7 +9,7 @@ import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../components/searchbar/search_bar";
 import { Row, Col } from "react-bootstrap";
 
-import { ClientsService } from "../../services/clients.service";
+
 
 const LitMarker = ({ left, top, style, children }) => (
   <FontAwesomeIcon
@@ -45,28 +45,28 @@ const DeadMarker = ({ left, top, style, children }) => (
 );
 
 export function MapView() {
-  const clientsService = new ClientsService();
+
   const [clientData, setClientData] = useState(undefined);
 
   useEffect(() => {
     console.log("Getting clients... ");
-    clientsService
-      .getClients()
-      .then((response) => {
-        console.log("Get clients response: ", response);
-        response["data"] = response["data"].filter(
-          (client) => client.type === "cpe"
-        );
-        response["data"] = response["data"].map((client) => {
-          client.attributes = JSON.parse(client.attributes);
-          return client;
-        });
-        console.log("Get clients response filtered: ", response["data"]);
-        setClientData(response["data"]);
-      })
-      .catch((error) => {
-        console.log("Something went wrong: ", error);
-      });
+    // clientsService
+    //   .getClients()
+    //   .then((response) => {
+    //     console.log("Get clients response: ", response);
+    //     response["data"] = response["data"].filter(
+    //       (client) => client.type === "cpe"
+    //     );
+    //     response["data"] = response["data"].map((client) => {
+    //       client.attributes = JSON.parse(client.attributes);
+    //       return client;
+    //     });
+    //     console.log("Get clients response filtered: ", response["data"]);
+    //     setClientData(response["data"]);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Something went wrong: ", error);
+    //   });
   }, []);
 
   return (

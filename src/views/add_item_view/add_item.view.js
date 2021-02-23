@@ -20,6 +20,7 @@ export function AddItemView(props) {
        
 
          postNewClient(data)
+         console.log(newClient, 'newclient')
         
           document.getElementById("add-client-form").reset();
             // .then(response => {

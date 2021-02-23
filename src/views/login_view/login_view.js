@@ -1,19 +1,16 @@
 import React from 'react'
-import {PostClientEndpoint} from '../../customHooks/postClientEndpoint'
+import loginUser from '../../services/auth_axios'
 import LoginForm from '../../components/loginForm/login_form.component'
+export default function LoginView({setToken}) {
 
-export default function LoginView(props) {
 
-  
- 
 
-  const handleSubmit = async (e, data) => {
+  async function handleSubmit (e, data)  {
 
     e.preventDefault()
-    
-    
-   
-  }
+    const token = await loginUser(data)
+    setToken(token)
+    }
   return (
     <div>
        <LoginForm  handleSubmit={handleSubmit}/>

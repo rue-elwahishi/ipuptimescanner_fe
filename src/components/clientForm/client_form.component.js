@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Form, Row, Col, Button, Alert } from "react-bootstrap";
-import { ClientsService } from "../../services/clients.service";
+
 import {useForm} from "../../customHooks/custom_hooks";
 
 export function ClientFormComponent(props) {
   const [title, setTitle] = useState(undefined);
-  const clientService = new ClientsService();
+ 
 
   const { inputs, handleInputChange, setInputs } = useForm(
     {
@@ -29,25 +29,25 @@ export function ClientFormComponent(props) {
   }, []);
 
   const prevState = () => {
-    if (props.client_id) {
-      setTitle("Editing");
-      clientService
-        .getSpecificClient(props.client_id)
-        .then((response) => {
-          let original_data = response["data"][0];
+    // if (props.client_id) {
+    //   setTitle("Editing");
+    //   clientService
+    //     .getSpecificClient(props.client_id)
+    //     .then((response) => {
+    //       let original_data = response["data"][0];
 
-          const objectified = JSON.parse(original_data.attributes);
+    //       const objectified = JSON.parse(original_data.attributes);
 
-          original_data.attributes = objectified;
+    //       original_data.attributes = objectified;
 
-          setInputs(original_data);
-        })
-        .catch((error) => {
-          console.log("Get Specific Client error:", error);
-        });
-    } else {
-      setTitle("Adding");
-    }
+    //       setInputs(original_data);
+    //     })
+    //     .catch((error) => {
+    //       console.log("Get Specific Client error:", error);
+    //     });
+    // } else {
+    //   setTitle("Adding");
+    // }
   };
 
   return (
