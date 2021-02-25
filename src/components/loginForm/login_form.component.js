@@ -8,8 +8,6 @@ export default function LoginForm(props) {
     },
     () => props.handleSubmit()
   );
-
-  console.log(props, 'props')
   return (
     <div>
       <div className="container-fluid vh-100 ">
